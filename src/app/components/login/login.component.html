@@ -1,0 +1,45 @@
+<div>
+  <h1>Login</h1>
+  <hr />
+  <form [formGroup]="loginForm">
+    <section>
+      <label for="phone">Enter Phone no. :</label>
+      <small
+        *ngIf="!loginForm.get('phone').valid && loginForm.get('phone').touched"
+      >
+        *Invalid Phone number</small
+      >
+      <input type="text" id="phone" formControlName="phone" />
+
+      <br />
+
+      <label for="card">Enter the last 4 digits of your credit card :</label>
+      <small
+        *ngIf="!loginForm.get('card').valid && loginForm.get('card').touched"
+      >
+        *Invalid input
+      </small>
+      <input type="number" id="card" formControlName="card" />
+
+      <br />
+
+      <!-- Disable the button if form is invalid -->
+      <button (click)="next()" class="nxt">Next</button>
+    </section>
+
+    <section>
+      <label for="otp">Enter The OTP. :</label>
+      <small
+        *ngIf="!loginForm.get('otp').valid && loginForm.get('otp').touched"
+      >
+        *Invalid OTP</small
+      >
+      <input type="number" id="otp" formControlName="otp" />
+
+      <br />
+
+      <!-- disable the button if otp is invalid -->
+      <button (click)="login()" class="login">Login</button>
+    </section>
+  </form>
+</div>

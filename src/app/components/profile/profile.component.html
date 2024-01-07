@@ -1,0 +1,73 @@
+<!-- Show an inital message in the format below -->
+<!-- Obtain essential data of the user from Loans array in db.json using card id recieved -->
+
+<h2>
+  Hi name, You have due of xxx Rs and you can upgrade the loan upto yyy Rs
+</h2>
+<!--Show this msg if the user has credit limit remaining -->
+<h2>Hi name, You have due of xxx Rs.</h2>
+<!--Show this msg if the user has exhausted the credit limit -->
+
+<!-- find xxx (final amount) from the Loan data of the user and calculate yyy (credit limit - final amount) -->
+
+<div *ngIf="showLoan">
+  <table>
+    <!-- Use the obtained Loan data of the user and fill the x given below -->
+    <th colspan="2">Loan details</th>
+    <tr>
+      <td>Laon Amount</td>
+      <td>x Rs</td>
+    </tr>
+    <tr>
+      <td>Interest</td>
+      <td>6%</td>
+    </tr>
+    <tr>
+      <td>Amount to be paid</td>
+      <td>x Rs</td>
+    </tr>
+    <tr>
+      <td>Duration</td>
+      <td>x Months</td>
+    </tr>
+    <tr>
+      <td>Monthly EMI</td>
+      <td>x Rs</td>
+    </tr>
+
+    <tr>
+      <td colspan="2" id="upgrade">
+        <button (click)="upgrade()">Upgrade</button>
+      </td>
+      <!-- Show this button only if the user's loan can be upgraded and the new loan data is not calculated-->
+
+      <td>
+        <button (click)="cancel()">Cancel</button>
+      </td>
+      <!-- Show this button only if the new loan data is calculated  -->
+
+      <td>
+        <button (click)="proceed()">Proceed</button>
+      </td>
+      <!-- Show this button only if the new loan data is calculated  -->
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="!showLoan">
+  <h1>Upgrade your loan</h1>
+  <hr />
+  <form [formGroup]="loanForm">
+    <label for="amount"><b>Enter the amount to add:</b></label>
+    <small
+      *ngIf="loanForm.get('amount').invalid && loanForm.get('amount').touched"
+    ></small>
+
+    <!--  create a dynamic validation message like above if the the user entered an amount beyond the new upgrade limit -->
+    <input type="text" id="amount" formControlName="amount" />
+
+    <br />
+    <!-- Disable the button if amont is invalid or the entered amount exceeds the new upgrade limit of the user -->
+    <button (click)="view()" class="btn">View</button>
+  </form>
+</div>

@@ -1,0 +1,67 @@
+<!-- Show an inital message in the format below -->
+<!-- Obtain credit limit and name of the user from Cards array in db.json using card id recieved -->
+<h2>Hi "name", You are eligible for a loan upto "credit limit" Rs.</h2>
+
+<div>
+  <h1>Customize your loan</h1>
+  <hr />
+  <form [formGroup]="loanForm">
+    <label for="amount"><b>Enter Laon amount :</b></label>
+    <small
+      *ngIf="loanForm.get('amount').invalid && loanForm.get('amount').touched"
+    >
+      *Minimum amount is 10000</small
+    >
+
+    <!--  create a dynamic validation message like above if the the user entered an amount beyond credit limit -->
+    <input type="text" id="amount" formControlName="amount" />
+
+    <br />
+
+    <label for="duration"><b>Select the duration :</b></label>
+    <select name="duration" id="duration" formControlName="duration">
+      <option value="12">12 Months</option>
+      <option value="24">24 Months</option>
+      <option value="36">36 Months</option>
+      <option value="48">48 Months</option>
+    </select>
+
+    <br />
+    <!-- Disable the button if form is invalid or the entered amount exceeds the credit limit of the user -->
+    <button (click)="view()" class="btn">View</button>
+  </form>
+</div>
+
+<div>
+  <!-- Use appropriate datas to fill x -->
+  <table>
+    <th colspan="2">Loan details</th>
+    <tr>
+      <td>Laon Amount</td>
+      <td>X Rs</td>
+    </tr>
+    <tr>
+      <td>Interest</td>
+      <td>6%</td>
+    </tr>
+    <tr>
+      <td>Amount to be paid</td>
+      <td>X Rs</td>
+    </tr>
+    <tr>
+      <td>Duration</td>
+      <td>X Months</td>
+    </tr>
+    <tr>
+      <td>Monthly EMI</td>
+      <td>X Rs</td>
+    </tr>
+
+    <tr>
+      <td>
+        <button (click)="close()">Close</button>
+      </td>
+      <td><button (click)="proceed()">Proceed</button></td>
+    </tr>
+  </table>
+</div>
