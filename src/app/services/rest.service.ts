@@ -14,8 +14,9 @@ export class RestService {
   // Use "url" as path to db.json and complete the services
 
   getLogin(): Observable<any> {
-    // return the Login array
-    return of();
+    // return the Login arraylw
+    let data = this.http.get('http://localhost:3000/Login');
+    return of(data);
   }
 
   getCard(id: any): Observable<any> {

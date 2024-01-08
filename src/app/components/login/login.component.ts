@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   otp: any;
   cardData: any;
 
-  constructor() {}
+  constructor(private restSevice: RestService) {}
 
   ngOnInit(): void {
     // Obtain the Login array from db.json using service and store it in this.loginData
@@ -28,12 +28,21 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       // Create the form elements with following validations
       // phone : Required, should be a 10 digit number starts with 6,7,8 or 9
+      phone: new FormControl(null, Validators.pattern('((6|7|9|8)\\d{9})$')),
+      card: new FormControl(null, Validators.pattern('([0-9]\\d{3})$')),
+      otp: new FormControl(
+        null,
+        Validators.pattern('\b(1\\d{2}|[2-9]\\d{2}|[1-9]\\d{3})\b')
+      ),
       // card  : Required, should be a 4 digit number
       // otp   : Required, should be a random number from 100 to 99999
     });
+
+    console.log('form ', this.loginForm);
   }
 
   next() {
+    console.log('in next ', this.loginForm);
     // Call this function when button "Next" is clicked
     // Used to validate credentials and generate otp
     // If the credentials are present in array generate the otp and show the otp field hiding other form elements
@@ -48,5 +57,6 @@ export class LoginComponent implements OnInit {
     // If loan_status is true navigate to "Profile Component" else navigate to "Loans Component"
     // Also pass the card id to the specific component
     // If the otp is false show an alert "Wrong OTP !" then hide the OTP field and show phone number and card digits fields
+    this.restSevice.getLogin().subscribe((data) => console.log(data));
   }
 }
