@@ -19,8 +19,9 @@ export class LoginComponent implements OnInit {
   loginData: any;
   otp: any;
   cardData: any;
+  id: string = '';
 
-  constructor(private restSevice: RestService) {}
+  constructor(private restSevice: RestService, private router: Router) {}
 
   ngOnInit(): void {
     // Obtain the Login array from db.json using service and store it in this.loginData
@@ -43,6 +44,29 @@ export class LoginComponent implements OnInit {
 
   next() {
     console.log('in next ', this.loginForm);
+
+    let dataValue: Array<any> = [];
+    let flag = false;
+
+    this.restSevice.getLogin().subscribe((data) => {
+      console.log('in data ', data);
+      data.forEach((element: { phone: any; card: string; id: string }) => {
+        console.log();
+        if (
+          element.phone == this.loginForm.get('phone').value &&
+          element.card.slice(-4) == this.loginForm.get('card').value
+        ) {
+          flag = true;
+          this.id = element.card;
+        }
+      });
+      if (flag) {
+        this.otp = Math.floor(Math.random() * (99999 - 100) + 100);
+        window.alert('OTP =' + this.otp);
+      } else {
+        window.alert('Invalid Credentials');
+      }
+    });
     // Call this function when button "Next" is clicked
     // Used to validate credentials and generate otp
     // If the credentials are present in array generate the otp and show the otp field hiding other form elements
@@ -52,11 +76,26 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    if (this.otp == this.loginForm.get('otp').value) {
+      let data = this.restSevice.getCard(this.id);
+
+      data.subscribe((getData) => {
+        this.cardData = getData;
+        console.log('card data ', this.cardData);
+        if (this.cardData[0].loan_status) {
+          this.router.navigateByUrl('/Profile');
+        } else {
+          this.router.navigateByUrl('/Loans');
+        }
+      });
+    } else {
+      window.alert('Wrong OTP!');
+    }
     // Call this function when "Login" button is clicked
     // take the carddata  of the user and check if the user has a loan or not (check "loan_status" in Cards )
     // If loan_status is true navigate to "Profile Component" else navigate to "Loans Component"
     // Also pass the card id to the specific component
     // If the otp is false show an alert "Wrong OTP !" then hide the OTP field and show phone number and card digits fields
-    this.restSevice.getLogin().subscribe((data) => console.log(data));
+    //this.restSevice.getLogin().subscribe((data) => console.log(data));
   }
 }

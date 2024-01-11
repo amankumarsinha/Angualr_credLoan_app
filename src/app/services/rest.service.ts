@@ -8,20 +8,21 @@ import { Observable, of } from 'rxjs';
 export class RestService {
   constructor(private http: HttpClient) {}
 
-  url: string = '/api/';
+  url: string = 'http://localhost:3000';
   msg: any;
 
   // Use "url" as path to db.json and complete the services
 
   getLogin(): Observable<any> {
     // return the Login arraylw
-    let data = this.http.get('http://localhost:3000/Login');
-    return of(data);
+    let data = this.http.get(this.url + '/Login');
+    return data;
   }
 
   getCard(id: any): Observable<any> {
     // Using the id get the appropriate card data from Cards array
-    return of();
+    let data = this.http.get(this.url + '/Cards?id=' + id);
+    return data;
   }
 
   addLoan(data: any): Observable<any> {
