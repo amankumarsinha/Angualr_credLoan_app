@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
         this.cardData = getData;
         console.log('card data ', this.cardData);
         if (this.cardData[0].loan_status) {
-          this.router.navigateByUrl('/Profile');
+          this.router.navigateByUrl('/Profile/' + this.id);
         } else {
           this.router.navigateByUrl('/Loans');
         }

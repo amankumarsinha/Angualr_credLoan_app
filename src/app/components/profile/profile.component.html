@@ -10,13 +10,13 @@
 
 <!-- find xxx (final amount) from the Loan data of the user and calculate yyy (credit limit - final amount) -->
 
-<div *ngIf="showLoan">
+<div *ngIf="showLoan && loanData">
   <table>
     <!-- Use the obtained Loan data of the user and fill the x given below -->
     <th colspan="2">Loan details</th>
     <tr>
       <td>Laon Amount</td>
-      <td>x Rs</td>
+      <td>{{ loanData[0].principal }} Rs</td>
     </tr>
     <tr>
       <td>Interest</td>
@@ -24,15 +24,15 @@
     </tr>
     <tr>
       <td>Amount to be paid</td>
-      <td>x Rs</td>
+      <td>{{ loanData[0].finalAmount }} Rs</td>
     </tr>
     <tr>
       <td>Duration</td>
-      <td>x Months</td>
+      <td>{{ loanData[0].duration }} Months</td>
     </tr>
     <tr>
       <td>Monthly EMI</td>
-      <td>x Rs</td>
+      <td>{{ loanData[0].emi }} Rs</td>
     </tr>
 
     <tr>

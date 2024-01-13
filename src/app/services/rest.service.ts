@@ -27,12 +27,14 @@ export class RestService {
 
   addLoan(data: any): Observable<any> {
     // Add the data to Loans array
+    this.http.post(this.url, data);
     return of();
   }
 
   getLoan(id: any): Observable<any> {
     // Using the id get the appropriate Loans data from Loans array
-    return of();
+    let data = this.http.get(this.url + '/Loans?id=' + id);
+    return data;
   }
 
   updateCards(data: any): Observable<any> {
