@@ -15,6 +15,10 @@ export class ProfileComponent implements OnInit {
 
   showLoan = true;
   cardId: string | null = '';
+  creditLimit: number = 0;
+  rem: number = 0;
+  haveLoanLeft: boolean = false;
+  newLoan: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,15 +35,30 @@ export class ProfileComponent implements OnInit {
     });
 
     this.restService.getLoan(this.cardId).subscribe((card) => {
-      console.log('card data', card);
+      console.log('loan data', card);
       this.loanData = card;
       console.log(' loadata ', this.loanData[0]);
+      //this.creditLimit = this.loanData[0].creditLimit;
+    });
+
+    this.restService.getCard(this.cardId).subscribe((card) => {
+      console.log('card data', card);
+      this.creditLimit = parseInt(card[0].credit_limit);
+      console.log(this.creditLimit, typeof this.creditLimit);
+      console.log(
+        this.loanData[0].finalAmount,
+        typeof this.loanData[0].finalAmount
+      );
+      this.rem = this.creditLimit - parseInt(this.loanData[0].finalAmount);
+      this.haveLoanLeft = this.rem > 0;
+      console.log(this.rem, this.haveLoanLeft);
     });
   }
 
   upgrade() {
     // Hide the table and show the form to upgrade the loan
     this.showLoan = false;
+    this.newLoan = true;
   }
 
   view() {

@@ -16,6 +16,7 @@ export class LoansComponent implements OnInit {
   finalAmount: number = 0;
   emi: number = 0;
   showTable: boolean = true;
+  duration :string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -80,10 +81,10 @@ export class LoansComponent implements OnInit {
       name: this.cardData[0].name,
       principal: this.amount,
       finalAmount: this.finalAmount,
-      duration: this.loanForm.get('duration').value,
+      duration: 
       emi: this.emi,
     };
-
+    console.log('new data', data);
     this.restService.addLoan(data);
   }
 

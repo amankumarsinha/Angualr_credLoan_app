@@ -1,11 +1,14 @@
 <!-- Show an inital message in the format below -->
 <!-- Obtain essential data of the user from Loans array in db.json using card id recieved -->
 
-<h2>
-  Hi name, You have due of xxx Rs and you can upgrade the loan upto yyy Rs
+<h2 *ngIf="haveLoanLeft && loanData">
+  Hi name, You have due of {{ loanData[0].finalAmount }} Rs and you can upgrade
+  the loan upto {{ rem }} Rs
 </h2>
 <!--Show this msg if the user has credit limit remaining -->
-<h2>Hi name, You have due of xxx Rs.</h2>
+<h2 *ngIf="!haveLoanLeft && loanData">
+  Hi name, You have due of {{ loanData[0].finalAmount }} Rs.
+</h2>
 <!--Show this msg if the user has exhausted the credit limit -->
 
 <!-- find xxx (final amount) from the Loan data of the user and calculate yyy (credit limit - final amount) -->
@@ -36,17 +39,17 @@
     </tr>
 
     <tr>
-      <td colspan="2" id="upgrade">
+      <td *ngIf="!newLoan && haveLoanLeft" colspan="2" id="upgrade">
         <button (click)="upgrade()">Upgrade</button>
       </td>
       <!-- Show this button only if the user's loan can be upgraded and the new loan data is not calculated-->
 
-      <td>
+      <td *ngIf="newLoan">
         <button (click)="cancel()">Cancel</button>
       </td>
       <!-- Show this button only if the new loan data is calculated  -->
 
-      <td>
+      <td *ngIf="newLoan">
         <button (click)="proceed()">Proceed</button>
       </td>
       <!-- Show this button only if the new loan data is calculated  -->

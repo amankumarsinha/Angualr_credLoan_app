@@ -17,7 +17,7 @@ import { RestService } from '../../services/rest.service';
 export class LoginComponent implements OnInit {
   loginForm: any;
   loginData: any;
-  otp: any;
+  otp: any = 0;
   cardData: any;
   id: string = '';
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       card: new FormControl(null, Validators.pattern('([0-9]\\d{3})$')),
       otp: new FormControl(
         null,
-        Validators.pattern('\b(1\\d{2}|[2-9]\\d{2}|[1-9]\\d{3})\b')
+        Validators.pattern('(1\\d{2}|[2-9]\\d{2}|[1-9]\\d{3}|[1-9]\\d{4})$')
       ),
       // card  : Required, should be a 4 digit number
       // otp   : Required, should be a random number from 100 to 99999
@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
         if (this.cardData[0].loan_status) {
           this.router.navigateByUrl('/Profile/' + this.id);
         } else {
-          this.router.navigateByUrl('/Loans');
+          this.router.navigateByUrl('/Loans/' + this.id);
         }
       });
     } else {

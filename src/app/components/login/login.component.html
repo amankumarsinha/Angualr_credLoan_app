@@ -39,7 +39,13 @@
       <br />
 
       <!-- disable the button if otp is invalid -->
-      <button (click)="login()" class="login">Login</button>
+      <button
+        (click)="login()"
+        class="login"
+        [disabled]="this.loginForm.get('otp').status === 'VALID' ? false : true"
+      >
+        Login
+      </button>
     </section>
   </form>
 </div>
