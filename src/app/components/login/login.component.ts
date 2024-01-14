@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
       });
       if (flag) {
         this.otp = Math.floor(Math.random() * (99999 - 100) + 100);
-        window.alert('OTP =' + this.otp);
+        window.alert('The OTP is :' + this.otp);
       } else {
         window.alert('Invalid Credentials');
       }

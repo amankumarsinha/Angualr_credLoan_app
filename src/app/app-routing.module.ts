@@ -4,8 +4,9 @@ import { LoginComponent } from './components/login/login.component';
 import { LoansComponent } from './components/loans/loans.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
-const routes: Routes = [
-  // Login   : LoginComponent
+export const routes: Routes = [
+  // Login   : LoginComponen
+  { path: '', component: LoansComponent },
   { path: 'Login', component: LoginComponent },
   { path: 'Loans/:id', component: LoansComponent },
   { path: 'Profile/:id', component: ProfileComponent },

@@ -27,8 +27,10 @@ export class RestService {
 
   addLoan(data: any): Observable<any> {
     // Add the data to Loans array
-    this.http.post(this.url, data);
-    return of();
+    console.log('insdie loan post', data);
+    let dataValue = this.http.post(this.url + '/Loans', data);
+    dataValue.subscribe((res) => console.log('status ', res));
+    return of(dataValue);
   }
 
   getLoan(id: any): Observable<any> {

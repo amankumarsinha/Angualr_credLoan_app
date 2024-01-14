@@ -16,11 +16,14 @@ export class LoansComponent implements OnInit {
   finalAmount: number = 0;
   emi: number = 0;
   showTable: boolean = true;
-  duration :string = '';
+  duration: string = '';
+  name: string = '';
+  creditLimit: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private restService: RestService
+    private restService: RestService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +35,8 @@ export class LoansComponent implements OnInit {
     data.subscribe((getData) => {
       this.cardData = getData;
       console.log('card data ', this.cardData);
+      this.name = this.cardData[0].name;
+      this.creditLimit = this.cardData[0].credit_limit;
     });
 
     this.loanForm = new FormGroup({
@@ -52,7 +57,7 @@ export class LoansComponent implements OnInit {
     // final this.amount  = this.amount + (this.amount *6 ) * (duration in years)
     // emi = final this.amount / duration in months (round off using ceiling function)
     // display this data in appropriate positions in the loan table and hide the form
-
+    this.duration = this.loanForm.get('duration').value;
     this.amount = parseInt(this.loanForm.get('amount').value);
     this.finalAmount =
       this.amount +
@@ -77,15 +82,17 @@ export class LoansComponent implements OnInit {
     // use the proper service and update the card data of the user by setting loan_status = true
     // Show an alert message "Loan approved", pass the card id to the Profile component and navigate there
     let data = {
-      id: this.cardData[0].id,
+      id: '' + this.cardData[0].id,
       name: this.cardData[0].name,
       principal: this.amount,
       finalAmount: this.finalAmount,
-      duration: 
+      duration: this.duration,
       emi: this.emi,
     };
     console.log('new data', data);
     this.restService.addLoan(data);
+    window.alert('Loan Approved');
+    this.router.navigateByUrl('/Profile/' + this.cardData[0].id);
   }
 
   close() {
